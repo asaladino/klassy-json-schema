@@ -4,6 +4,7 @@ import javafx.application.Application
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
+import javafx.scene.layout.AnchorPane
 import javafx.stage.Stage
 
 class KlassyJsonSchema : Application() {
@@ -14,6 +15,9 @@ class KlassyJsonSchema : Application() {
         scene.stylesheets.add("/styles/Styles.css")
         stage.title = "Klassy Json Schema"
         stage.scene = scene
+        stage.maxHeight = (root as AnchorPane).prefHeightProperty().value
+        stage.minHeight = root.prefHeightProperty().value
+        stage.minWidth = root.prefWidthProperty().value
         stage.show()
     }
 
