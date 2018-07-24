@@ -48,7 +48,6 @@ class ClassCreateUtility(private val setting: Setting) {
                     .with("isDataModel", isDataModel)
                     .with("contents", contents)
             template.render(model, Files.newOutputStream(path))
-//            template.render(model, System.out)
         }
     }
 

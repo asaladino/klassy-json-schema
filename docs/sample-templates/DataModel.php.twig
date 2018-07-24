@@ -3,10 +3,12 @@
 namespace EthosApi\Data\Model;
 
 use EthosApi\Data\Base\BaseModel;
+
 /**
- * {{ description }}
+ * {{ contents.description }}
  */
-class {{ className }} {% if isDataModel %}extends BaseModel{% else %}{% endif %} {
+class {{ className }} {% if(isDataModel) %}extends BaseModel {% endif %} {
+
     /**
      * Used for chain building a model.
      * @return Model|BaseModel
@@ -15,17 +17,18 @@ class {{ className }} {% if isDataModel %}extends BaseModel{% else %}{% endif %}
     {
         return parent::builder();
     }
-{% for value in properties %}{% if value/isArray %}
+    {% for key, value in contents.properties %}
+{%- set type = "Object" -%}
+{%- set name = key -%}
+{%- set serializeName = key -%}
+{%- if(value.type == "string") %} {% set type = "string" %} {% endif -%}
+{%- if(value.type == "object") %} {% set type = title(key) %} {% endif -%}
+{%- if(value.type == "array") %} {% set type = concat(title(key), "[]") %} {% endif %}
     /**
-     * {{ value/description }}
-     * @var {% if value/isString %}string{% else %}\EthosApi\Data\Model\{{ value/type }}{% endif %}[]
+     * {{ value.title }}
+     * {{ value.description }}
+     * @var {{ type }}
      */
-    public ${{ value/variableName }};
-{% else %}
-    /**
-     * {{ value/description }}
-     * @var {% if value/isString %}string{% else %}\EthosApi\Data\Model\{{ value/type }}{% endif %}
-     */
-    public ${{ value/variableName }};
-{% endif %}{% endfor %}
+    public ${{ name }};
+    {% endfor %}
 }

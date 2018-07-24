@@ -110,4 +110,9 @@ class RootController : Initializable, ProgressInterface {
             statusLabel?.text = progress.description
         }
     }
+
+    @Suppress("UNUSED_PARAMETER")
+    fun close(actionEvent: ActionEvent) {
+        System.exit(0)
+    }
 }

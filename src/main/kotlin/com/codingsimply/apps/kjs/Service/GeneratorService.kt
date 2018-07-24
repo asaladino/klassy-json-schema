@@ -8,7 +8,7 @@ import com.codingsimply.apps.kjs.Utility.ClassCreateUtility
 import javafx.concurrent.Service
 import javafx.concurrent.Task
 
-class GeneratorService(val progressInterface: ProgressInterface) : Service<Void>() {
+class GeneratorService(private val progressInterface: ProgressInterface) : Service<Void>() {
 
     var setting: Setting? = null
 

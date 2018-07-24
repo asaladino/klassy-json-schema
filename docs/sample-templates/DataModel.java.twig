@@ -18,9 +18,9 @@ public class {{ className }} {% if(isDataModel) %}extends BaseModel {% endif %} 
 {%- set type = "Object" -%}
 {%- set name = key -%}
 {%- set serializeName = key -%}
-{%- if(value.type == "string") %} {% set value = "String" %} {% endif -%}
-{%- if(value.type == "object") %} {% set value = title(key) %} {% endif -%}
-{%- if(value.type == "array") %} {% set value = concat("java.util.List<", title(key), ">") %} {% endif -%}
+{%- if(value.type == "string") %} {% set type = "String" %} {% endif -%}
+{%- if(value.type == "object") %} {% set type = title(key) %} {% endif -%}
+{%- if(value.type == "array") %} {% set type = concat("java.util.List<", title(key), ">") %} {% endif -%}
 {%- if(name == "void") %} {% set name = "aVoid" %} {% endif %}
     @Getter
     @Setter
