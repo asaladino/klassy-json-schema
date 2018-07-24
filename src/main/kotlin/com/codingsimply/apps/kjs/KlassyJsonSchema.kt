@@ -1,5 +1,7 @@
 package com.codingsimply.apps.kjs
 
+import com.codingsimply.apps.kjs.Controller.RootController
+import com.codingsimply.apps.kjs.Model.Setting
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
@@ -10,8 +12,13 @@ import javafx.stage.Stage
 class KlassyJsonSchema : Application() {
 
     override fun start(stage: Stage) {
-        val root = FXMLLoader.load<Parent>(javaClass.getResource("/fxml/root.fxml"))
+        val loader = FXMLLoader()
+        val root = loader.load<Parent>(javaClass.getResourceAsStream("/fxml/root.fxml"))
+        val controller = loader.getController<RootController>()
+        controller.loadSetting(Setting.build(parameters))
+
         val scene = Scene(root)
+
         scene.stylesheets.add("/styles/Styles.css")
         stage.title = "Klassy Json Schema"
         stage.scene = scene
@@ -25,7 +32,7 @@ class KlassyJsonSchema : Application() {
 
         @JvmStatic
         fun main(args: Array<String>) {
-            launch(KlassyJsonSchema::class.java)
+            launch(KlassyJsonSchema::class.java, *args)
         }
     }
 }

@@ -1,7 +1,9 @@
 package com.codingsimply.apps.kjs.Controller
 
+import com.codingsimply.apps.kjs.Model.Progress
 import com.codingsimply.apps.kjs.Model.Setting
 import com.codingsimply.apps.kjs.Service.GeneratorService
+import javafx.application.Platform
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -13,7 +15,7 @@ import java.net.URL
 import java.util.ResourceBundle
 import javafx.stage.FileChooser
 
-class RootController : Initializable {
+class RootController : Initializable, ProgressInterface {
 
     @FXML
     var templateFileTextField: TextField? = null
@@ -36,11 +38,16 @@ class RootController : Initializable {
     @FXML
     var statusLabel: Label? = null
 
+    var setting: Setting? = null
+
     private val generatorService = GeneratorService(this)
 
     override fun initialize(url: URL?, resourceBundle: ResourceBundle?) {
         generatorService.setOnSucceeded {
             startToggleButton?.text = "Start"
+            startToggleButton?.isSelected = false
+            statusLabel?.text = "All done"
+            generatorService.reset()
         }
     }
 
@@ -86,6 +93,21 @@ class RootController : Initializable {
         val file = directoryChooser.showDialog((actionEvent.source as Node).scene.window)
         if (file != null) {
             outputFolderTextField?.text = file.absolutePath
+        }
+    }
+
+    fun loadSetting(setting: Setting) {
+        this.setting = setting
+        templateFileTextField?.text = setting.templateFile
+        schemaFolderTextField?.text = setting.schemaFolder
+        outputFolderTextField?.text = setting.outputFolder
+        fileTypeTextField?.text = setting.outputType
+    }
+
+    override fun update(progress: Progress) {
+        Platform.runLater {
+            generatorProgressBar?.progress = (progress.position/progress.total).toDouble()
+            statusLabel?.text = progress.description
         }
     }
 }
