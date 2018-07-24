@@ -106,7 +106,8 @@ class RootController : Initializable, ProgressInterface {
 
     override fun update(progress: Progress) {
         Platform.runLater {
-            generatorProgressBar?.progress = (progress.position/progress.total).toDouble()
+            val percent = (progress.position.toDouble()/progress.total.toDouble()).toDouble()
+            generatorProgressBar?.progress = percent
             statusLabel?.text = progress.description
         }
     }

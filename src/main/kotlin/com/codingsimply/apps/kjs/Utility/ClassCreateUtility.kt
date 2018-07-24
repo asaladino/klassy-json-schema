@@ -30,9 +30,9 @@ class ClassCreateUtility(private val setting: Setting) {
                         val arrayItems = propertyMeta["items"] as LinkedTreeMap<*, *>?
                         val arrayType = arrayItems?.get("type") as String?
                         val arrayPropertyMeta = arrayItems?.get("properties") as LinkedTreeMap<*, *>?
-                        if (arrayPropertyMeta != null && arrayType != null && arrayType == "object") {
+                        if (arrayItems != null && arrayType != null && arrayType == "object") {
                             val propertyClassName = classNameFromProperty(propertyName)
-                            writeClass(arrayPropertyMeta, propertyClassName, false)
+                            writeClass(arrayItems, propertyClassName, false)
                         }
                     }
                 }

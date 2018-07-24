@@ -43,7 +43,7 @@ compileTestKotlin {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'atomizer.AtomizerKt'
+        attributes 'Main-Class': 'com.codingsimply.apps.kjs.KlassyJsonSchema'
     }
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
