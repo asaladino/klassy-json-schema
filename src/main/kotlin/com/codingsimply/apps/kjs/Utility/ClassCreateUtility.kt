@@ -29,7 +29,6 @@ class ClassCreateUtility(private val setting: Setting) {
                     if (propertyMeta != null && type == "array") {
                         val arrayItems = propertyMeta["items"] as LinkedTreeMap<*, *>?
                         val arrayType = arrayItems?.get("type") as String?
-                        val arrayPropertyMeta = arrayItems?.get("properties") as LinkedTreeMap<*, *>?
                         if (arrayItems != null && arrayType != null && arrayType == "object") {
                             val propertyClassName = classNameFromProperty(propertyName)
                             writeClass(arrayItems, propertyClassName, false)
@@ -43,11 +42,14 @@ class ClassCreateUtility(private val setting: Setting) {
     private fun saveClass(contents: LinkedTreeMap<*, *>, className: String, isDataModel: Boolean) {
         val path = Paths.get(setting.outputFolder, className + "." + setting.outputType)
         if (!path.toFile().exists() || isDataModel) {
-            val model = JtwigModel.newModel()
-                    .with("className", className)
-                    .with("isDataModel", isDataModel)
-                    .with("contents", contents)
-            template.render(model, Files.newOutputStream(path))
+            if((setting.generateSecondaryClasses && !isDataModel) || isDataModel) {
+                val model = JtwigModel.newModel()
+                        .with("className", className)
+                        .with("isDataModel", isDataModel)
+                        .with("setting", setting)
+                        .with("contents", contents)
+                template.render(model, Files.newOutputStream(path))
+            }
         }
     }
 

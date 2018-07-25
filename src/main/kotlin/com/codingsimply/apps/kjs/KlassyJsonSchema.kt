@@ -22,8 +22,14 @@ class KlassyJsonSchema : Application() {
         scene.stylesheets.add("/styles/Styles.css")
         stage.title = "Klassy Json Schema"
         stage.scene = scene
-        stage.maxHeight = (root as BorderPane).prefHeightProperty().value
-        stage.minHeight = root.prefHeightProperty().value
+        var heightOffset = 0
+        val os = System.getProperty("os.name")
+        if (os != null && os.startsWith("Mac")) {
+            heightOffset = 30
+        }
+
+        stage.maxHeight = (root as BorderPane).prefHeightProperty().value - heightOffset
+        stage.minHeight = root.prefHeightProperty().value - heightOffset
         stage.minWidth = root.prefWidthProperty().value
         stage.show()
     }
