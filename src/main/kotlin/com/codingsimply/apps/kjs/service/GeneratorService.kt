@@ -23,27 +23,20 @@ class GeneratorService(private val progressInterface: ProgressInterface) : Servi
     }
 
     fun generate() {
-        if (isInputValid()) {
-            // Find all json schema files.
+        try {
             val jsonSchemaRepository = JsonSchemaRepository(setting!!)
             val files = jsonSchemaRepository.findAllFiles()
             val classCreateUtility = ClassCreateUtility(setting!!)
             var progress = 1
-            try {
-                for (file in files) {
-                    val className = classCreateUtility.classNameFromFile(file)
-                    val json = jsonSchemaRepository.fileAsJson(file)
-                    classCreateUtility.writeClass(json, className, true)
-                    progressInterface.update(Progress(className, progress++, files.size))
-                }
-
-            } catch (exception: Exception) {
-                exception.printStackTrace()
+            for (file in files) {
+                val className = classCreateUtility.classNameFromFile(file)
+                val json = jsonSchemaRepository.fileAsJson(file)
+                classCreateUtility.writeClass(json, className, true)
+                progressInterface.update(Progress(className, progress++, files.size))
             }
+            progressInterface.finished(Progress("Done", 0, 0))
+        } catch (e: Exception) {
+            progressInterface.error(e)
         }
-    }
-
-    private fun isInputValid(): Boolean {
-        return true
     }
 }

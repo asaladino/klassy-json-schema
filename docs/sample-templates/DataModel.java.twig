@@ -1,6 +1,7 @@
 package asaladino.ellucian.EthosApi.Data.Model;
 
 import asaladino.ellucian.EthosApi.Data.Base.BaseModel;
+import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,20 +12,25 @@ import lombok.Setter;
 @Builder
 public class {{ className }} {% if(isDataModel) %}extends BaseModel {% endif %} {
     {% for key, value in contents.properties %}
+    {%- if(key != "metadata") -%}
+    {% if(key != "id") %}
+
     /**
      * {{ value.title }}
      * {{ value.description }}
      */
-{%- set type = "Object" -%}
-{%- set name = key -%}
-{%- set serializeName = key -%}
-{%- if(value.type == "string") %} {% set type = "String" %} {% endif -%}
-{%- if(value.type == "object") %} {% set type = title(key) %} {% endif -%}
-{%- if(value.type == "array") %} {% set type = concat("java.util.List<", title(key), ">") %} {% endif -%}
-{%- if(name == "void") %} {% set name = "aVoid" %} {% endif %}
+    {%- set type = "Object" -%}
+    {%- set name = key -%}
+    {%- set serializeName = key -%}
+    {%- if(value.type == "string") %} {% set type = "String" %} {% endif -%}
+    {%- if(value.type == "object") %} {% set type = title(key) %} {% endif -%}
+    {%- if(value.type == "array") %} {% set type = concat("java.util.List<", title(type), ">") %} {% endif -%}
+    {%- if(name == "void") %} {% set name = "aVoid" %} {% endif %}
     @Getter
     @Setter
     @SerializedName("{{ serializeName }}")
     private {{ type }} {{ name }};
+    {%- endif -%}
+    {%- endif -%}
     {% endfor %}
 }

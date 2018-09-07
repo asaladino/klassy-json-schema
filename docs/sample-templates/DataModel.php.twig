@@ -3,27 +3,22 @@
 namespace EthosApi\Data\Model;
 
 use EthosApi\Data\Base\BaseModel;
+use EthosApi\Data\Base\Metadata;
 
 /**
  * {{ contents.description }}
  */
-class {{ className }} {% if(isDataModel) %}extends BaseModel {% endif %} {
-
-    /**
-     * Used for chain building a model.
-     * @return Model|BaseModel
-     */
-    public static function builder()
-    {
-        return parent::builder();
-    }
-    {% for key, value in contents.properties %}
-{%- set type = "Object" -%}
-{%- set name = key -%}
-{%- set serializeName = key -%}
-{%- if(value.type == "string") %} {% set type = "string" %} {% endif -%}
-{%- if(value.type == "object") %} {% set type = title(key) %} {% endif -%}
-{%- if(value.type == "array") %} {% set type = concat(title(key), "[]") %} {% endif %}
+class {{ className }} {% if(isDataModel) %}extends BaseModel {% endif %}
+{
+    {% for key, value in contents.properties -%}
+    {%- set type = "object" -%}
+    {%- set name = key -%}
+    {%- set serializeName = key -%}
+    {%- if(setting.generateSecondaryClasses or name == "metadata") -%}
+    {%- if(value.type == "string") %} {% set type = "string" %} {% endif -%}
+    {%- if(value.type == "object") %} {% set type = title(key) %} {% endif -%}
+    {%- endif %}
+    {%- if(value.type == "array") %} {% set type = concat(type, "[]") -%} {%- endif %}
     /**
      * {{ value.title }}
      * {{ value.description }}
@@ -31,4 +26,14 @@ class {{ className }} {% if(isDataModel) %}extends BaseModel {% endif %} {
      */
     public ${{ name }};
     {% endfor %}
+    {%- if(isDataModel) %}
+    /**
+     * Used for chain building a model.
+     * @return BaseModel|{{ className }}
+     */
+    public static function builder()
+    {
+        return parent::builder();
+    }
+    {%- endif %}
 }
