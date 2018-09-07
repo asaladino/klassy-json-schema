@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 
-<BorderPane maxHeight="340.0" minHeight="340.0" prefHeight="340.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codingsimply.apps.kjs.Controller.RootController">
+<BorderPane maxHeight="340.0" minHeight="340.0" prefHeight="340.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.codingsimply.apps.kjs.controller.RootController">
    <center>
       <AnchorPane>
       

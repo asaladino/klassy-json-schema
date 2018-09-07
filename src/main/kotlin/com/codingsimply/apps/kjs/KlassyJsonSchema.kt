@@ -1,7 +1,7 @@
 package com.codingsimply.apps.kjs
 
-import com.codingsimply.apps.kjs.Controller.RootController
-import com.codingsimply.apps.kjs.Model.Setting
+import com.codingsimply.apps.kjs.controller.RootController
+import com.codingsimply.apps.kjs.model.Setting
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
@@ -17,11 +17,9 @@ class KlassyJsonSchema : Application() {
         val controller = loader.getController<RootController>()
         controller.loadSetting(Setting.build(parameters))
 
-        val scene = Scene(root)
-
-        scene.stylesheets.add("/styles/Styles.css")
+        stage.scene = Scene(root)
+        stage.scene.stylesheets.add("/styles/Styles.css")
         stage.title = "Klassy Json Schema"
-        stage.scene = scene
         stage.maxHeight = (root as BorderPane).prefHeightProperty().value
         stage.minHeight = root.prefHeightProperty().value
         stage.minWidth = root.prefWidthProperty().value

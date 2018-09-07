@@ -1,4 +1,4 @@
-package com.codingsimply.apps.kjs.Model
+package com.codingsimply.apps.kjs.model
 
 import javafx.application.Application
 

@@ -1,10 +1,10 @@
-package com.codingsimply.apps.kjs.Service
+package com.codingsimply.apps.kjs.service
 
-import com.codingsimply.apps.kjs.Controller.ProgressInterface
-import com.codingsimply.apps.kjs.Model.Progress
-import com.codingsimply.apps.kjs.Model.Setting
-import com.codingsimply.apps.kjs.Repository.JsonSchemaRepository
-import com.codingsimply.apps.kjs.Utility.ClassCreateUtility
+import com.codingsimply.apps.kjs.controller.ProgressInterface
+import com.codingsimply.apps.kjs.model.Progress
+import com.codingsimply.apps.kjs.model.Setting
+import com.codingsimply.apps.kjs.repository.JsonSchemaRepository
+import com.codingsimply.apps.kjs.utility.ClassCreateUtility
 import javafx.concurrent.Service
 import javafx.concurrent.Task
 

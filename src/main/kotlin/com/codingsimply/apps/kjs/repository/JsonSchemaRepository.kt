@@ -1,6 +1,6 @@
-package com.codingsimply.apps.kjs.Repository
+package com.codingsimply.apps.kjs.repository
 
-import com.codingsimply.apps.kjs.Model.Setting
+import com.codingsimply.apps.kjs.model.Setting
 import com.google.gson.Gson
 import com.google.gson.internal.LinkedTreeMap
 import com.google.gson.reflect.TypeToken

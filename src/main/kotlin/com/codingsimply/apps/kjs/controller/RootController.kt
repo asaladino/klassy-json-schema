@@ -1,8 +1,8 @@
-package com.codingsimply.apps.kjs.Controller
+package com.codingsimply.apps.kjs.controller
 
-import com.codingsimply.apps.kjs.Model.Progress
-import com.codingsimply.apps.kjs.Model.Setting
-import com.codingsimply.apps.kjs.Service.GeneratorService
+import com.codingsimply.apps.kjs.model.Progress
+import com.codingsimply.apps.kjs.model.Setting
+import com.codingsimply.apps.kjs.service.GeneratorService
 import javafx.application.Platform
 import javafx.event.ActionEvent
 import javafx.fxml.FXML

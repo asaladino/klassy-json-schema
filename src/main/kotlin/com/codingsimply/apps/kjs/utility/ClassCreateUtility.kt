@@ -1,6 +1,6 @@
-package com.codingsimply.apps.kjs.Utility
+package com.codingsimply.apps.kjs.utility
 
-import com.codingsimply.apps.kjs.Model.Setting
+import com.codingsimply.apps.kjs.model.Setting
 import com.google.common.base.CaseFormat
 import com.google.gson.internal.LinkedTreeMap
 import java.nio.file.Path
@@ -8,7 +8,6 @@ import org.jtwig.JtwigModel
 import org.jtwig.JtwigTemplate
 import java.nio.file.Files
 import java.nio.file.Paths
-
 
 class ClassCreateUtility(private val setting: Setting) {
 
@@ -50,7 +49,6 @@ class ClassCreateUtility(private val setting: Setting) {
             template.render(model, Files.newOutputStream(path))
         }
     }
-
 
     private fun classNameFromProperty(propertyName: String): String {
         return propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1)
