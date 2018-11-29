@@ -16,6 +16,7 @@ import java.net.URL
 import java.util.ResourceBundle
 import javafx.stage.FileChooser
 import java.io.File
+import java.nio.file.Files
 
 class RootController : Initializable, ProgressInterface {
 
@@ -82,8 +83,10 @@ class RootController : Initializable, ProgressInterface {
         val fileChooser = FileChooser()
         fileChooser.title = "Select Template File"
         val fileLocation = File(templateFileTextField?.text)
-        fileChooser.initialFileName = fileLocation.name
-        fileChooser.initialDirectory = fileLocation.parentFile
+        if(Files.exists(fileLocation.parentFile.toPath())) {
+            fileChooser.initialFileName = fileLocation.name
+            fileChooser.initialDirectory = fileLocation.parentFile
+        }
         val file = fileChooser.showOpenDialog((actionEvent.source as Node).scene.window)
         if (file != null) {
             templateFileTextField?.text = file.absolutePath
@@ -94,7 +97,9 @@ class RootController : Initializable, ProgressInterface {
         val directoryChooser = DirectoryChooser()
         directoryChooser.title = "Select Schema Folder"
         val fileLocation = File(schemaFolderTextField?.text)
-        directoryChooser.initialDirectory = fileLocation.parentFile
+        if(Files.exists(fileLocation.parentFile.toPath())) {
+            directoryChooser.initialDirectory = fileLocation.parentFile
+        }
         val file = directoryChooser.showDialog((actionEvent.source as Node).scene.window)
         if (file != null) {
             schemaFolderTextField?.text = file.absolutePath
@@ -105,7 +110,9 @@ class RootController : Initializable, ProgressInterface {
         val directoryChooser = DirectoryChooser()
         directoryChooser.title = "Select Output Folder"
         val fileLocation = File(outputFolderTextField?.text)
-        directoryChooser.initialDirectory = fileLocation.parentFile
+        if(Files.exists(fileLocation.parentFile.toPath())) {
+            directoryChooser.initialDirectory = fileLocation.parentFile
+        }
         val file = directoryChooser.showDialog((actionEvent.source as Node).scene.window)
         if (file != null) {
             outputFolderTextField?.text = file.absolutePath

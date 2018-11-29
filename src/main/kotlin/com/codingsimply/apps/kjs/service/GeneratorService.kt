@@ -31,7 +31,7 @@ class GeneratorService(private val progressInterface: ProgressInterface) : Servi
             for (file in files) {
                 val className = classCreateUtility.classNameFromFile(file)
                 val json = jsonSchemaRepository.fileAsJson(file)
-                classCreateUtility.writeClass(json, className, true)
+                classCreateUtility.writeClass(json, className, true, file)
                 progressInterface.update(Progress(className, progress++, files.size))
             }
             progressInterface.finished(Progress("Done", 0, 0))

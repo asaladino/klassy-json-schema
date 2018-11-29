@@ -13,8 +13,8 @@ class ClassCreateUtility(private val setting: Setting) {
 
     private val template: JtwigTemplate = JtwigTemplate.fileTemplate(setting.templateFile)
 
-    fun writeClass(contents: LinkedTreeMap<*, *>, className: String, isDataModel: Boolean) {
-        saveClass(contents, className, isDataModel)
+    fun writeClass(contents: LinkedTreeMap<*, *>, className: String, isDataModel: Boolean, file: Path?) {
+        saveClass(contents, className, file, isDataModel)
         if (contents["properties"] != null) {
             for ((key, value) in (contents["properties"] as LinkedTreeMap<*, *>).entries) {
                 val propertyName = key as String
@@ -23,14 +23,14 @@ class ClassCreateUtility(private val setting: Setting) {
                 if (type != null) {
                     if (propertyMeta != null && type == "object") {
                         val propertyClassName = classNameFromProperty(propertyName)
-                        writeClass(propertyMeta, propertyClassName, false)
+                        writeClass(propertyMeta, propertyClassName, false, null)
                     }
                     if (propertyMeta != null && type == "array") {
                         val arrayItems = propertyMeta["items"] as LinkedTreeMap<*, *>?
                         val arrayType = arrayItems?.get("type") as String?
                         if (arrayItems != null && arrayType != null && arrayType == "object") {
                             val propertyClassName = classNameFromProperty(propertyName)
-                            writeClass(arrayItems, propertyClassName, false)
+                            writeClass(arrayItems, propertyClassName, false, null)
                         }
                     }
                 }
@@ -38,7 +38,7 @@ class ClassCreateUtility(private val setting: Setting) {
         }
     }
 
-    private fun saveClass(contents: LinkedTreeMap<*, *>, className: String, isDataModel: Boolean) {
+    private fun saveClass(contents: LinkedTreeMap<*, *>, className: String, file: Path?, isDataModel: Boolean) {
         val path = Paths.get(setting.outputFolder, className + "." + setting.outputType)
         if (!path.toFile().exists() || isDataModel) {
             if((setting.generateSecondaryClasses && !isDataModel) || isDataModel) {
@@ -47,6 +47,7 @@ class ClassCreateUtility(private val setting: Setting) {
                         .with("isDataModel", isDataModel)
                         .with("setting", setting)
                         .with("contents", contents)
+                        .with("dataModelSlug", file?.let { dataModelSluggedFromFile(it) })
                 template.render(model, Files.newOutputStream(path))
             }
         }
@@ -57,9 +58,11 @@ class ClassCreateUtility(private val setting: Setting) {
     }
 
     fun classNameFromFile(file: Path): String {
-        val className = file.toFile().name
-                .replace(".json", "")
-                .replace("-", "_")
+        val className = dataModelSluggedFromFile(file).replace("-", "_")
         return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, className)
+    }
+
+    private fun dataModelSluggedFromFile(file: Path): String {
+        return file.toFile().name.replace(".json", "")
     }
 }
