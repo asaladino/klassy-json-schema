@@ -33,6 +33,9 @@ class RootController : Initializable, ProgressInterface {
     var fileTypeTextField: TextField? = null
 
     @FXML
+    var filenameSuffix: TextField? = null
+
+    @FXML
     var generatorProgressBar: ProgressBar? = null
 
     @FXML
@@ -65,6 +68,7 @@ class RootController : Initializable, ProgressInterface {
                 outputFolderTextField?.text ?: "",
                 fileTypeTextField?.text ?: "",
                 generateSecondaryClassesCheckbox?.isSelected ?: true,
+                filenameSuffix?.text ?: "",
                 false)
         val toggleButton = actionEvent.source as ToggleButton
         if (generatorService.state == Worker.State.SUCCEEDED) {
@@ -125,6 +129,7 @@ class RootController : Initializable, ProgressInterface {
         setTooltipValue(schemaFolderTextField, setting.schemaFolder)
         setTooltipValue(outputFolderTextField, setting.outputFolder)
         setTooltipValue(fileTypeTextField, setting.outputType)
+        setTooltipValue(filenameSuffix, setting.filenameSuffix)
         update(Progress("Not doing anything", 0, 1))
         generateSecondaryClassesCheckbox?.isSelected = setting.generateSecondaryClasses
     }

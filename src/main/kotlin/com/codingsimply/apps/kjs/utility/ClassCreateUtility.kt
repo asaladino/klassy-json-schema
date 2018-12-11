@@ -39,7 +39,7 @@ class ClassCreateUtility(private val setting: Setting) {
     }
 
     private fun saveClass(contents: LinkedTreeMap<*, *>, className: String, file: Path?, isDataModel: Boolean) {
-        val path = Paths.get(setting.outputFolder, className + "." + setting.outputType)
+        val path = Paths.get(setting.outputFolder, className + setting.filenameSuffix + "." + setting.outputType)
         if (!path.toFile().exists() || isDataModel) {
             if((setting.generateSecondaryClasses && !isDataModel) || isDataModel) {
                 val model = JtwigModel.newModel()

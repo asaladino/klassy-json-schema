@@ -7,6 +7,7 @@ data class Setting(var templateFile: String,
                    var outputFolder: String,
                    var outputType: String,
                    var generateSecondaryClasses: Boolean,
+                   var filenameSuffix: String,
                    var useCli: Boolean) {
     companion object {
         fun build(parameters: Application.Parameters): Setting {
@@ -16,6 +17,7 @@ data class Setting(var templateFile: String,
                     parameters.named["outputFolder"] ?: "",
                     parameters.named["outputType"] ?: "",
                     parameters.named["generateSecondaryClasses"]?.toBoolean() ?: true,
+                    parameters.named["filenameSuffix"] ?: "",
                     parameters.named["useCli"]?.toBoolean() ?: false
             )
         }
